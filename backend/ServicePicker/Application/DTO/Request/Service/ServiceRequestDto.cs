@@ -1,6 +1,4 @@
-﻿using Domain.Models;
-
-namespace Application.DTO.Request.Service
+﻿namespace Application.DTO.Request.Service
 {
     public class ServiceRequestDto
     {

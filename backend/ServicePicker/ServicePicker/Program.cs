@@ -5,6 +5,7 @@ using Domain.RepositoryInterfaces;
 using Infrastructure.EF;
 using Infrastructure.Interfaces;
 using Infrastructure.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,11 @@ services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 });
 
+services.AddAuthentication(o =>
+{
+    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie();
+
 services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.Name = "ServicePickerCookies";
@@ -68,13 +74,13 @@ services.AddSingleton<IDatabaseContextFactory, DatabaseContextFactory>();
 
 services.AddScoped<IServiceRepository, ServiceRepository>(provider =>
     new ServiceRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
+services.AddScoped<IFeatureRepository, FeatureRepository>(provider =>
+    new FeatureRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
 services.AddScoped<IUserRepository, UserRepository>(provider =>
     new UserRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
 
-services.AddScoped<IServiceService, ServiceService>(provider =>
-                new ServiceService(
-                    provider.GetService<IServiceRepository>(),
-                    provider.GetService<IFeatureRepository>()));
+services.AddScoped<IServiceService, ServiceService>();
+services.AddScoped<IFeatureService, FeatureService>();
 
 var app = builder.Build();
 
@@ -84,6 +90,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
@@ -105,7 +113,6 @@ app.UseSpa(spa =>
 {
     spa.Options.SourcePath = "ClientApp";
 });
-
 
 app.MapControllers();
 

@@ -29,7 +29,7 @@ namespace ServicePicker.Controllers
             return this.Ok(paged);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{url}")]
         public ActionResult<ServiceDto> GetPublishedServices(string url)
         {
             return this.Ok(this.serviceService.GetService(url));
@@ -40,6 +40,23 @@ namespace ServicePicker.Controllers
         public ActionResult<ServiceDto> Create([FromBody]ServiceCreateDto block)
         {
             return this.Ok(this.serviceService.CreateService(block));
+        }
+
+        [HttpPost]
+        [Route("Publish")]
+        [Authorize(Roles = Constants.RoleManager.Admin)]
+        public ActionResult<ServiceDto> Publish(string url)
+        {
+            return this.Ok(this.serviceService.PublishService(url));
+        }
+
+
+        [HttpPost]
+        [Route("Unpublish")]
+        [Authorize(Roles = Constants.RoleManager.Admin)]
+        public ActionResult<ServiceDto> Unpublish(string url)
+        {
+            return this.Ok(this.serviceService.UnpublishService(url));
         }
 
         [HttpPut]

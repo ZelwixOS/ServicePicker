@@ -9,7 +9,9 @@ namespace Application.DTO.Response
             this.Id = service.Id;
             this.Name = service.Name;
             this.Description = service.Description;
-            
+            this.Url = service.URL;
+            this.PicUrl = service.PicURL;
+
             if (service.Features!= null)
             {
                 foreach(Feature feature in service.Features)
@@ -20,10 +22,10 @@ namespace Application.DTO.Response
                             this.Positive.Add(feature.Value);
                             break;
                         case FeatureType.Negative:
-                            this.Neutral.Add(feature.Value);
+                            this.Negative.Add(feature.Value);
                             break;
                         case FeatureType.Neutral:
-                            this.Negative.Add(feature.Value);
+                            this.Neutral.Add(feature.Value);
                             break;
                     }
                 }
@@ -33,6 +35,10 @@ namespace Application.DTO.Response
         public Guid Id { get; set; }
 
         public string Name { get; set; }
+
+        public string Url { get; set; }
+
+        public string PicUrl { get; set; }
 
         public string Description { get; set; }
 

@@ -40,6 +40,32 @@ namespace Application.Services
             return new ServiceDto(this.serviceRepository.CreateItem(service.ToModel()));
         }
 
+        public ServiceDto PublishService(string url)
+        {
+            var service = this.serviceRepository.GetItem(url);
+
+            if (service != null)
+            {
+                service.Published = true;
+                return new ServiceDto(this.serviceRepository.UpdateItem(service));
+            }
+
+            return null;
+        }
+
+        public ServiceDto UnpublishService(string url)
+        {
+            var service = this.serviceRepository.GetItem(url);
+
+            if (service != null)
+            {
+                service.Published = false;
+                return new ServiceDto(this.serviceRepository.UpdateItem(service));
+            }
+
+            return null;
+        }
+
         public ServiceDto UpdateService(ServiceUpdateDto service)
         {
             return new ServiceDto(this.serviceRepository.UpdateItem(service.ToModel()));

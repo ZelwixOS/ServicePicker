@@ -22,21 +22,21 @@ namespace Application.DTO.Request.Service
 
             service.Features =
                 this.Positive.Select(x =>
-                new Feature()
+                new Domain.Models.Feature()
                 {
                     FeatureType = FeatureType.Positive,
                     Value = x,
                     Service = service
                 }).Union(this.Negative.Select(x =>
-                new Feature()
-                {
-                    FeatureType = FeatureType.Positive,
-                    Value = x,
-                    Service = service
-                })).Union(this.Neutral.Select(x =>
-                new Feature()
+                new Domain.Models.Feature()
                 {
                     FeatureType = FeatureType.Neutral,
+                    Value = x,
+                    Service = service
+                })).Union(this.Negative.Select(x =>
+                new Domain.Models.Feature()
+                {
+                    FeatureType = FeatureType.Negative,
                     Value = x,
                     Service = service
                 })).ToHashSet();

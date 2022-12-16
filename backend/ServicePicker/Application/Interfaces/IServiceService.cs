@@ -10,6 +10,8 @@ namespace Application.Interfaces
         ServiceDto GetService(string url);
         List<ServiceDto> GetServices();
         PaginatedData<ServiceDto> GetServices(int page, int itemsOnPage);
+        ServiceDto PublishService(string url);
+        ServiceDto UnpublishService(string url);
         ServiceDto UpdateService(ServiceUpdateDto service);
     }
 }
