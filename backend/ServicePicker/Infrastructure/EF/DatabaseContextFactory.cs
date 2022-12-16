@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EF
 {
-    public class DatabaseContextFactory
+    public class DatabaseContextFactory : IDatabaseContextFactory
     {
         public DatabaseContext CreateDbContext(string connectionString)
         {
