@@ -1,6 +1,8 @@
-﻿namespace Application.DTO.Request.Service
+﻿using Application.Interfaces;
+
+namespace Application.DTO.Request.Service
 {
-    public class ServiceRequestDto
+    public class ServiceRequestDto : IDtoMapper<Domain.Models.Service>
     {
         public string Name { get; set; }
 

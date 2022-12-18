@@ -6,6 +6,7 @@ using Infrastructure.EF;
 using Infrastructure.Interfaces;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,8 +50,16 @@ services.Configure<IdentityOptions>(options =>
 
 services.AddAuthentication(o =>
 {
+    o.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    o.DefaultForbidScheme = GoogleDefaults.AuthenticationScheme;
     o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-}).AddCookie();
+}).AddCookie()
+    .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+    {
+        IConfigurationSection googleAuthNSection = configuration.GetSection("Authentication:Google");
+        options.ClientId = googleAuthNSection["ClientId"];
+        options.ClientSecret = googleAuthNSection["ClientSecret"];
+    });
 
 services.ConfigureApplicationCookie(options =>
 {
@@ -78,9 +87,12 @@ services.AddScoped<IFeatureRepository, FeatureRepository>(provider =>
     new FeatureRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
 services.AddScoped<IUserRepository, UserRepository>(provider =>
     new UserRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
+services.AddScoped<IReviewRepository, ReviewRepository>(provider =>
+    new ReviewRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
 
 services.AddScoped<IServiceService, ServiceService>();
 services.AddScoped<IFeatureService, FeatureService>();
+services.AddScoped<IReviewService, ReviewService>();
 
 var app = builder.Build();
 

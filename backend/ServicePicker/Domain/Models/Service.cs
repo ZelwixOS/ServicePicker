@@ -23,10 +23,18 @@ namespace Domain.Models
         [MaxLength(150)]
         public string PicURL { get; set; }
 
+        [DefaultValue(0.0)]
+        public double UserScore { get; set; }
+
+        [Required]
+        public int Popularity { get; set; }
+
         [Required]
         [DefaultValue(false)]
         public bool Published { get; set; }
 
         public HashSet<Feature> Features { get; set; }
+
+        public HashSet<Review> Reviews { get; set; }
     }
 }

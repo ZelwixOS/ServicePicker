@@ -4,7 +4,6 @@ using Application.Helpers;
 using Application.Interfaces;
 using Domain.RepositoryInterfaces;
 
-
 namespace Application.Services
 {
     public class ServiceService : IServiceService

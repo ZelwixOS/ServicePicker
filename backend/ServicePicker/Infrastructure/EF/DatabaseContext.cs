@@ -16,6 +16,8 @@ namespace Infrastructure.EF
 
         public DbSet<Feature> Features { get; set; }
 
+        public DbSet<Review> Reviews { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Service>().HasKey(s => s.Id);
@@ -29,6 +31,13 @@ namespace Infrastructure.EF
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(u => u.Id);
+            });
+
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.HasOne(s => s.Service).WithMany(s => s.Reviews).HasForeignKey(r => r.ServiceId);
+                entity.HasOne(p => p.User).WithMany(t => t.Reviews).HasForeignKey(p => p.UserId);
+                entity.HasKey(p => p.Id);
             });
 
             base.OnModelCreating(modelBuilder);

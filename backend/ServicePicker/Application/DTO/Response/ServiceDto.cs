@@ -8,6 +8,7 @@ namespace Application.DTO.Response
         {
             this.Id = service.Id;
             this.Name = service.Name;
+            this.UserScore = service.UserScore;
             this.Description = service.Description;
             this.Url = service.URL;
             this.PicUrl = service.PicURL;
@@ -35,6 +36,8 @@ namespace Application.DTO.Response
         public Guid Id { get; set; }
 
         public string Name { get; set; }
+
+        public double UserScore { get; set; }
 
         public string Url { get; set; }
 

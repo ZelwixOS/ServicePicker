@@ -1,4 +1,4 @@
-﻿namespace WebApi.Controllers
+﻿namespace ServicePicker.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -23,6 +23,20 @@
         {
             this.accountService = accountService;
             this.logger = logger;
+        }
+
+        [HttpPost]
+        [Route("Register")]
+        public async Task<ActionResult<MessageResultDto>> Register([FromBody] CustomerRegistrationDto model)
+        {
+            return this.Ok(await accountService.Register(model));
+        }
+
+        [HttpPost]
+        [Route("RegisterViaGoogle")]
+        public async Task<ActionResult<MessageResultDto>> RegisterViaGoogle([FromBody] CustomerRegistrationDto model)
+        {
+            return this.Ok(await accountService.RegisterViaGoogle(model));
         }
 
         [HttpPost]
