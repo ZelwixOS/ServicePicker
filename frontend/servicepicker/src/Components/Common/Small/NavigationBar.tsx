@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from 'tss-react/mui'
 import { AppBar, Toolbar, Grid, Button, InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import ColorizeIcon from '@mui/icons-material/Colorize'
+
+import LoginModal from '../Big/LoginModal'
+import UserMiniPanel from './UserMiniPanel'
+import { getRole } from '../../../Requests/AccountRequests';
+import Roles from '../../../Types/Roles';
 
 const useStyles = makeStyles()((theme) => ({
   buttons: {
@@ -74,6 +79,16 @@ const useStyles = makeStyles()((theme) => ({
 
 const NavigationBar: React.FC = () => {
   const [search, setSearch] = useState<string>('')
+  const [isAuth, setAuth] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    checkAuth(isMounted);
+    return () => {
+      isMounted = false;
+    };
+  });
 
   const onSearchChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const str = event.target.value as string
@@ -88,6 +103,20 @@ const NavigationBar: React.FC = () => {
       window.location.replace(`/?search=${search}`)
     }
   }
+
+  const checkAuth = async (isMounted: boolean) => {
+    const authres = await getRole();
+
+    if (isMounted) {
+      if (authres !== Roles.guest) {
+        sessionStorage.setItem('signed', authres);
+        setAuth(true);
+      } else {
+        setAuth(false);
+      }
+      setLoaded(true);
+    }
+  };
 
   const { classes, cx } = useStyles()
 
@@ -133,6 +162,9 @@ const NavigationBar: React.FC = () => {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
+          </Grid>
+          <Grid container item xs={12} sm={5} justifyContent="flex-end">
+            {loaded && (isAuth ? <UserMiniPanel /> : <LoginModal />)}
           </Grid>
         </Toolbar>
       </AppBar>

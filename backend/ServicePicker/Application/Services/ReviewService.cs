@@ -38,8 +38,6 @@
                 return null;
             }
 
-            service.Features = null;
-
             service.UserScore = ((service.UserScore * service.Popularity) + review.Mark) / (service.Popularity + 1);
             service.Popularity++;
 

@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
+import Rating from '@mui/material/Rating'
 
 import Service from '../../../Types/Service'
 
@@ -73,6 +74,7 @@ const ServiceCard: React.FC<IServiceCard> = (props) => {
               {service.name}
             </Link>
           </Typography>
+          <Rating readOnly value={service?.userScore}/>
           <Typography variant="body2" color="text.secondary">
             {reformateDescription(service.description)}
           </Typography>

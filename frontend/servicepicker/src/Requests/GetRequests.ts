@@ -12,9 +12,20 @@ async function getServices(currentPage: number, itemsOnPage: number) {
   let url = `/api/Service?Page=${currentPage}&ItemsOnPage=${itemsOnPage}`
   if (search) {
     url += `&search=${search}`
+  } else
+  {
+    url += `&search=""`
   }
 
   return await getRequest(url)
+}
+
+async function getReviews(serviceId: string) {
+  return await getRequest(`/api/Review/${serviceId}`)
+}
+
+async function getService(serviceId: string) {
+  return await getRequest(`/api/Service/${serviceId}`)
 }
 
 async function getSearchedServices(
@@ -28,4 +39,4 @@ async function getSearchedServices(
 
 export default getRequest
 
-export { getRequest, getServices, getSearchedServices }
+export { getRequest, getReviews, getServices, getService, getSearchedServices }

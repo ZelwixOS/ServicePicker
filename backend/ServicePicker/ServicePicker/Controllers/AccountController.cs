@@ -8,6 +8,7 @@
     using Application.DTO.Response.Account;
     using Application.Helpers;
     using Application.Interfaces;
+    using Application.Services;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@
     public class AccountController : ControllerBase
     {
         private readonly IAccountService accountService;
+        private readonly IRolesIntializer rolesIntializer;
         private readonly ILogger logger;
 
         public AccountController(IAccountService accountService, ILogger<AccountController> logger)
@@ -37,6 +39,13 @@
         public async Task<ActionResult<MessageResultDto>> RegisterViaGoogle([FromBody] CustomerRegistrationDto model)
         {
             return this.Ok(await accountService.RegisterViaGoogle(model));
+        }
+
+        [HttpPost("GoogleAuth")]
+        public async Task<ActionResult<MessageResultDto>> AuthViaGoogle([FromBody] GoogleLoginDto loginData)
+        {
+            var answer = await accountService.GoogleAuth(loginData.Token);
+            return Ok(answer);
         }
 
         [HttpPost]
@@ -65,7 +74,7 @@
         public async Task<ActionResult<string>> Role()
         {
             var roles = await this.accountService.GetRole(HttpContext);
-            return Ok(roles[0]);
+            return Ok(roles.FirstOrDefault());
         }
 
         [HttpPost]

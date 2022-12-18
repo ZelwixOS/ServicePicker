@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import Login from '../Types/Login';
+import Register from '../Types/Register';
 import ServerResponse from '../Types/ServerResponse';
 import UserMainInfo from '../Types/UserMainInfo';
 
@@ -10,8 +11,17 @@ const serverAnswers = {
   userNotFound: 10,
 };
 
+const authViaGoogle = async (token: string): Promise<ServerResponse> =>
+  (await axios.post('/api/Account/GoogleAuth', { token: token })).data;
+
 const logInRequest = async (logInData: Login): Promise<ServerResponse> =>
   (await axios.post('/api/Account/Login', logInData)).data;
+
+const registrationRequest = async (registrationData: Register): Promise<ServerResponse> =>
+  (await axios.post('/api/Account/Register', registrationData)).data;
+
+const regViaGoogleRequest = async (registrationData: Register): Promise<ServerResponse> =>
+  (await axios.post('/api/Account/RegisterViaGoogle', registrationData)).data;
 
 const getRole = async (): Promise<string> => (await axios.get('/api/Account/Role')).data;
 
@@ -21,7 +31,10 @@ const logOut = async (): Promise<string> => (await axios.post('/api/Account/LogO
 
 export {
   serverAnswers,
+  authViaGoogle,
   logInRequest,
+  registrationRequest,
+  regViaGoogleRequest,
   getRole,
   getUserInfo,
   logOut,

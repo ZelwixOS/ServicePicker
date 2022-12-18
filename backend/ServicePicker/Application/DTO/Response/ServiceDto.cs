@@ -12,6 +12,7 @@ namespace Application.DTO.Response
             this.Description = service.Description;
             this.Url = service.URL;
             this.PicUrl = service.PicURL;
+            this.Popularity = service.Popularity;
 
             if (service.Features!= null)
             {
@@ -39,7 +40,11 @@ namespace Application.DTO.Response
 
         public double UserScore { get; set; }
 
+        public double Popularity { get; set; }
+
         public string Url { get; set; }
+
+        public bool Reviewed { get; set; }
 
         public string PicUrl { get; set; }
 

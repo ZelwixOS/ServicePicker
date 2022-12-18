@@ -3,6 +3,9 @@ type Service = {
     name: string;
     url: string;
     picUrl: string;
+    userScore: number;
+    popularity: number;
+    reviewed: boolean;
     description: string;
     positive: string[] | null;
     neutral: string[] | null;
