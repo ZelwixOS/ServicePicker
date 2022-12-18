@@ -9,7 +9,7 @@ namespace Application.Interfaces
         int DeleteService(Guid id);
         ServiceDto GetService(string url);
         List<ServiceDto> GetServices();
-        PaginatedData<ServiceDto> GetServices(int page, int itemsOnPage);
+        PaginatedData<ServiceDto> GetServices(int page, int itemsOnPage, string search);
         ServiceDto PublishService(string url);
         ServiceDto UnpublishService(string url);
         ServiceDto UpdateService(ServiceUpdateDto service);

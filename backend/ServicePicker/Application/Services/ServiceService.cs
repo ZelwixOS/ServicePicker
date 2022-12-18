@@ -27,9 +27,14 @@ namespace Application.Services
             return new ServiceDto(this.serviceRepository.GetItem(url));
         }
 
-        public PaginatedData<ServiceDto> GetServices(int page, int itemsOnPage)
+        public PaginatedData<ServiceDto> GetServices(int page, int itemsOnPage, string search)
         {
-            var services = this.serviceRepository.GetItems().Where(s => s.Published).Select(s => new ServiceDto(s));
+            if (search == "\"\"")
+            {
+                search = null;
+            }
+
+            var services = this.serviceRepository.GetItems().Where(s => s.Published).Where(s => string.IsNullOrEmpty(search) || s.Name.Contains(search)).Select(s => new ServiceDto(s));
             var result = Paginator<ServiceDto>.ElementsOfPage(services, page, itemsOnPage);
             return result;
         }

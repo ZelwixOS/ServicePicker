@@ -30,9 +30,9 @@ namespace ServicePicker.Controllers
         }
 
         [HttpGet]
-        public ActionResult<PaginatedData<ServiceDto>> GetPublishedServices(int page, int itemsOnPage)
+        public ActionResult<PaginatedData<ServiceDto>> GetPublishedServices(int page, int itemsOnPage, string search)
         {
-            var paged = this.serviceService.GetServices(page, itemsOnPage);
+            var paged = this.serviceService.GetServices(page, itemsOnPage, search);
             return this.Ok(paged);
         }
 
