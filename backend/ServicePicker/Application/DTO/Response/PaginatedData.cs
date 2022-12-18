@@ -1,6 +1,6 @@
 ﻿namespace Application.DTO.Response
 {
-    public class PaginatedData<T> where T : class
+    public class PaginatedData<T> where T: class
     {
         public PaginatedData(List<T> data, int currentPage, int maxPage)
         { 

@@ -33,6 +33,10 @@ namespace Domain.Models
         [DefaultValue(false)]
         public bool Published { get; set; }
 
+        public Guid CategoryId { get; set; }
+
+        public Category Category { get; set; }
+
         public HashSet<Feature> Features { get; set; }
 
         public HashSet<Review> Reviews { get; set; }

@@ -16,6 +16,9 @@ const useStyles = makeStyles()((theme) => ({
   filterPanel: {
     paddingTop: theme.spacing(1),
   },
+  core: {
+    padding: theme.spacing(4)
+  }
 }))
 
 const ServicesPage: React.FC = () => {
@@ -83,7 +86,7 @@ const ServicesPage: React.FC = () => {
   return (
     <React.Fragment>
       <NavigationBar />
-      <Grid xs={12} item container direction="row" justifyContent="center">
+      <Grid xs={12} item container direction="row" justifyContent="center" className={classes.core}>
         <Grid container justifyContent="center" sm={9}>
           <Grid item direction="column" justifyContent="center" container>
             <Grid

@@ -89,10 +89,14 @@ services.AddScoped<IUserRepository, UserRepository>(provider =>
     new UserRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
 services.AddScoped<IReviewRepository, ReviewRepository>(provider =>
     new ReviewRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
+services.AddScoped<ICategoryRepository, CategoryRepository>(provider =>
+    new CategoryRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
+
 
 services.AddScoped<IServiceService, ServiceService>();
 services.AddScoped<IFeatureService, FeatureService>();
 services.AddScoped<IReviewService, ReviewService>();
+services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

@@ -14,13 +14,19 @@ namespace Infrastructure.EF
 
         public DbSet<Service> Services { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public DbSet<Feature> Features { get; set; }
 
         public DbSet<Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Service>().HasKey(s => s.Id);
+            modelBuilder.Entity<Service>(entity =>
+            {
+                entity.HasOne(s => s.Category).WithMany(c => c.Services).HasForeignKey(f => f.CategoryId);
+                entity.HasKey(s => s.Id);
+            });
 
             modelBuilder.Entity<Feature>(entity =>
             {
@@ -39,6 +45,8 @@ namespace Infrastructure.EF
                 entity.HasOne(p => p.User).WithMany(t => t.Reviews).HasForeignKey(p => p.UserId);
                 entity.HasKey(p => p.Id);
             });
+
+            modelBuilder.Entity<Category>().HasKey(c => c.Id);
 
             base.OnModelCreating(modelBuilder);
         }
