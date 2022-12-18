@@ -2,7 +2,9 @@
 using Application.DTO.Response;
 using Application.Helpers;
 using Application.Interfaces;
+using Domain.Models;
 using Domain.RepositoryInterfaces;
+using System.Linq;
 
 namespace Application.Services
 {
@@ -34,9 +36,14 @@ namespace Application.Services
                 search = null;
             }
 
-            var services = this.serviceRepository.GetItems().Where(s => s.Published).Where(s => string.IsNullOrEmpty(search) || s.Name.Contains(search)).Select(s => new ServiceDto(s));
-            var result = Paginator<ServiceDto>.ElementsOfPage(services, page, itemsOnPage);
-            return result;
+            var services = this.serviceRepository
+                .GetItems()
+                .Where(s => s.Published)
+                .Where(s => string.IsNullOrEmpty(search) || s.Name.Contains(search))
+                .OrderByDescending(s => s.UserScore);
+                
+            var result = Paginator<Service>.ElementsOfPage(services, page, itemsOnPage);
+            return new PaginatedData<ServiceDto>(result.Data.Select(s => new ServiceDto(s)).ToList(), result.CurrentPage, result.MaxPage);
         }
 
         public ServiceDto CreateService(ServiceCreateDto service)

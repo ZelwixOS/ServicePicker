@@ -31,8 +31,9 @@
             var category = _categoryRepository.GetItem(id);
             if (category != null)
             {
-                var services = Paginator<Service>.ElementsOfPage(_serviceRepository.GetItems().Where(s => s.Published && s.CategoryId == category.Id), page, itemsOnPage);
-                return new CategoryServices(category, services);
+                var services = _serviceRepository.GetItems().Where(s => s.Published && s.CategoryId == category.Id).OrderByDescending(s => s.UserScore);
+                var paginatedServices = Paginator<Service>.ElementsOfPage(services, page, itemsOnPage);
+                return new CategoryServices(category, paginatedServices);
             }
             else
             {
