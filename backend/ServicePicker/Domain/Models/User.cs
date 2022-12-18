@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics.CodeAnalysis;
 
     public class User : IdentityUser<Guid>
     {
@@ -16,11 +17,12 @@
         public string SecondName { get; set; }
 
         [MaxLength(100)]
-        public string GoogleMail { get; set; }
-
+        [AllowNull]
+        public string? GoogleMail { get; set; }
 
         [MaxLength(100)]
-        public string Avatar { get; set; }
+        [AllowNull]
+        public string? Avatar { get; set; }
 
 
         public bool Banned { get; set; }

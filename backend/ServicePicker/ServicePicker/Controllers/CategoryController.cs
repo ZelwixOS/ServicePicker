@@ -30,7 +30,7 @@
             return this.Ok(_categoryService.GetCategories());
         }
 
-        [HttpGet("id/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<CategoryServices> Get(Guid id, int page, int itemsOnPage)
         {
             return this.Ok(_categoryService.GetCategory(id, page, itemsOnPage));

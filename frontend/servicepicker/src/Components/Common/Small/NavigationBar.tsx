@@ -6,8 +6,9 @@ import ColorizeIcon from '@mui/icons-material/Colorize'
 
 import LoginModal from '../Big/LoginModal'
 import UserMiniPanel from './UserMiniPanel'
-import { getRole } from '../../../Requests/AccountRequests';
-import Roles from '../../../Types/Roles';
+import { getRole } from '../../../Requests/AccountRequests'
+import Roles from '../../../Types/Roles'
+import NavigationMenu from './NavigationMenu'
 
 const useStyles = makeStyles()((theme) => ({
   buttons: {
@@ -79,16 +80,16 @@ const useStyles = makeStyles()((theme) => ({
 
 const NavigationBar: React.FC = () => {
   const [search, setSearch] = useState<string>('')
-  const [isAuth, setAuth] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
+  const [isAuth, setAuth] = useState<boolean>(false)
+  const [loaded, setLoaded] = useState<boolean>(false)
 
   useEffect(() => {
-    let isMounted = true;
-    checkAuth(isMounted);
+    let isMounted = true
+    checkAuth(isMounted)
     return () => {
-      isMounted = false;
-    };
-  });
+      isMounted = false
+    }
+  })
 
   const onSearchChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const str = event.target.value as string
@@ -105,18 +106,18 @@ const NavigationBar: React.FC = () => {
   }
 
   const checkAuth = async (isMounted: boolean) => {
-    const authres = await getRole();
+    const authres = await getRole()
 
     if (isMounted) {
       if (authres !== Roles.guest) {
-        sessionStorage.setItem('signed', authres);
-        setAuth(true);
+        sessionStorage.setItem('signed', authres)
+        setAuth(true)
       } else {
-        setAuth(false);
+        setAuth(false)
       }
-      setLoaded(true);
+      setLoaded(true)
     }
-  };
+  }
 
   const { classes, cx } = useStyles()
 
@@ -124,6 +125,7 @@ const NavigationBar: React.FC = () => {
     <React.Fragment>
       <AppBar>
         <Toolbar>
+          <NavigationMenu />
           <Grid item container xs={12} sm={4}>
             <Button
               variant="text"

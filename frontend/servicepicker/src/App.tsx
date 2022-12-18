@@ -10,6 +10,8 @@ import ServicesPage from './Components/Common/Big/ServicesPage'
 import RegistrationPage from './Components/Common/Big/RegistrationPage'
 import ServicePage from './Components/Common/Big/ServicePage'
 import CssBaseline from '@mui/material/CssBaseline'
+import CategoriesPage from './Components/Common/Big/CategoriesPage'
+import CategoryPage from './Components/Common/Big/CategoryPage'
 
 const innerTheme = createTheme({
   palette: {
@@ -32,6 +34,8 @@ const App: React.FC = () => (
       <Route path="/" element={<ServicesPage />} />
       <Route path="/service/:serviceId" element={<ServicePage />} />
       <Route path="/registration" element={<RegistrationPage />} />
+      <Route path="/categories" element={<CategoriesPage />} />
+      <Route path="/category/:categoryId" element={<CategoryPage />} />
     </Routes>
   </ThemeProvider>
 )

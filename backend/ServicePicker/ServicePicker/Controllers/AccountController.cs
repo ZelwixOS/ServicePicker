@@ -1,14 +1,11 @@
 ﻿namespace ServicePicker.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Application.DTO.Request.Account;
-    using Application.DTO.Response;
     using Application.DTO.Response.Account;
     using Application.Helpers;
     using Application.Interfaces;
-    using Application.Services;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -21,9 +18,10 @@
         private readonly IRolesIntializer rolesIntializer;
         private readonly ILogger logger;
 
-        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
+        public AccountController(IAccountService accountService, ILogger<AccountController> logger, IRolesIntializer rolesIntializer)
         {
             this.accountService = accountService;
+            this.rolesIntializer= rolesIntializer;
             this.logger = logger;
         }
 

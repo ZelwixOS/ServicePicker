@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Category from '../Types/Category'
 
 import Service from '../Types/Service'
 
@@ -12,8 +13,7 @@ async function getServices(currentPage: number, itemsOnPage: number) {
   let url = `/api/Service?Page=${currentPage}&ItemsOnPage=${itemsOnPage}`
   if (search) {
     url += `&search=${search}`
-  } else
-  {
+  } else {
     url += `&search=""`
   }
 
@@ -37,6 +37,27 @@ async function getSearchedServices(
   return await getRequest(url)
 }
 
+async function getAllCategories() {
+  return (await getRequest(`/api/Category/`)) as Category[]
+}
+
+async function getCategoryServices(
+  categoryId: string,
+  currentPage: number,
+  itemsOnPage: number,
+) {
+  let url = `/api/Category/${categoryId}?PageNumber=${currentPage}&ItemsOnPage=${itemsOnPage}`
+  return await getRequest(url)
+}
+
 export default getRequest
 
-export { getRequest, getReviews, getServices, getService, getSearchedServices }
+export {
+  getRequest,
+  getCategoryServices,
+  getAllCategories,
+  getReviews,
+  getServices,
+  getService,
+  getSearchedServices,
+}
