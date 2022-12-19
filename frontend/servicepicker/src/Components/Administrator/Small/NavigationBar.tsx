@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+import React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
 import { makeStyles } from 'tss-react/mui'
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import DevicesIcon from '@mui/icons-material/Devices';
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import ColorizeIcon from '@mui/icons-material/Colorize'
 
-import HiddenNavigation from './HiddenNavigation';
+import HiddenNavigation from './HiddenNavigation'
 
 const useStyles = makeStyles()((theme) => ({
-    logoButton: {
-      fontSize: '30px',
-      fontFamily: 'cursive',
-      [theme.breakpoints.down('sm')]: {
-        display: 'none',
-      },
+  logoButton: {
+    fontSize: '30px',
+    fontFamily: 'cursive',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
     },
-    logoIcon: {
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
+  },
+  logoIcon: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
     },
-  }),
-);
+  },
+}))
 
 const NavigationBar: React.FC = () => {
   const { classes, cx } = useStyles()
@@ -41,18 +40,24 @@ const NavigationBar: React.FC = () => {
               color="secondary"
               href="/"
               className={classes.logoButton}
-              startIcon={<DevicesIcon />}
+              startIcon={<ColorizeIcon />}
             >
-              DTS
+              ServicePicker
             </Button>
-            <Button variant="text" size="large" color="secondary" href="/" className={classes.logoIcon}>
-              <DevicesIcon />
+            <Button
+              variant="text"
+              size="large"
+              color="secondary"
+              href="/"
+              className={classes.logoIcon}
+            >
+              <ColorizeIcon />
             </Button>
           </Grid>
         </Toolbar>
       </AppBar>
       <Toolbar />
     </React.Fragment>
-  );
-};
-export default NavigationBar;
+  )
+}
+export default NavigationBar

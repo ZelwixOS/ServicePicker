@@ -5,13 +5,14 @@ namespace Application.Interfaces
 {
     public interface IServiceService
     {
-        ServiceDto CreateService(ServiceCreateDto service);
+        Task<ServiceDto> CreateServiceAsync(ServiceCreateDto service, bool publish = false);
         int DeleteService(Guid id);
         ServiceDto GetService(string url);
+        ServiceDto GetService(Guid id);
         List<ServiceDto> GetServices();
-        PaginatedData<ServiceDto> GetServices(int page, int itemsOnPage, string search);
-        ServiceDto PublishService(string url);
-        ServiceDto UnpublishService(string url);
-        ServiceDto UpdateService(ServiceUpdateDto service);
+        PaginatedData<ServiceDto> GetServices(int page, int itemsOnPage, string search, bool published);
+        ServiceDto PublishService(Guid id);
+        ServiceDto UnpublishService(Guid id);
+        Task<ServiceDto> UpdateServiceAsync(ServiceUpdateDto service);
     }
 }

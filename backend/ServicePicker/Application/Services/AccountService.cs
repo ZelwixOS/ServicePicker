@@ -274,5 +274,15 @@
                 return (dbUser != null) ? GoogleCode.EmailNotConnectedWithAccount : GoogleCode.NoUserInDB;
             }
         }
+
+        public async Task<List<UserInfo>> GetClientsAsync()
+        {
+            var clients = new List<UserInfo>();
+
+            IList<User> users = await this.userManager.GetUsersInRoleAsync(Role.Customer);
+            clients = users.Select(u => new UserInfo(u)).ToList();
+
+            return clients;
+        }
     }
 }

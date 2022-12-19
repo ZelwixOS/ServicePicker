@@ -30,15 +30,8 @@ const HiddenNavigation = () => {
   };
 
   const categories = onMenuItemClick.bind(this, '/admin/categories');
-  const commonCategories = onMenuItemClick.bind(this, '/admin/commonCategories');
-  const parameterBlocks = onMenuItemClick.bind(this, '/admin/parameterBlocks');
-  const parameters = onMenuItemClick.bind(this, '/admin/parameters');
-  const workers = onMenuItemClick.bind(this, '/admin/workers');
   const clients = onMenuItemClick.bind(this, '/admin/clients');
-  const products = onMenuItemClick.bind(this, '/admin/product');
-  const regions = onMenuItemClick.bind(this, '/admin/regions');
-  const outlets = onMenuItemClick.bind(this, '/admin/outlets');
-  const warehouses = onMenuItemClick.bind(this, '/admin/warehouses');
+  const services = onMenuItemClick.bind(this, '/admin/services');
 
   const menuItem = (name: string, click: () => void) => (
     <MenuItem onClick={click}>
@@ -76,25 +69,11 @@ const HiddenNavigation = () => {
       <Drawer anchor={'left'} open={state} onClose={toggleDrawer(false)}>
         {role === 'Admin' && (
           <List>
-            {menuItem('Обобщающие категории', commonCategories)}
-            <Divider />
             {menuItem('Категории', categories)}
             <Divider />
-            {menuItem('Блоки параметров', parameterBlocks)}
-            <Divider />
-            {menuItem('Параметры', parameters)}
-            <Divider />
-            {menuItem('Продукты', products)}
-            <Divider />
-            {menuItem('Работники', workers)}
+            {menuItem('Сервисы', services)}
             <Divider />
             {menuItem('Клиенты', clients)}
-            <Divider />
-            {menuItem('Регионы', regions)}
-            <Divider />
-            {menuItem('Магазины', outlets)}
-            <Divider />
-            {menuItem('Склады', warehouses)}
           </List>
         )}
       </Drawer>

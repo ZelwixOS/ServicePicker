@@ -13,6 +13,13 @@ namespace Application.DTO.Response
             this.Url = service.URL;
             this.PicUrl = service.PicURL;
             this.Popularity = service.Popularity;
+            this.Published = service.Published;
+
+            if (service.Category != null)
+            {
+                service.Category.Services = null;
+                this.Category = new CategoryDto(service.Category);
+            }
 
             if (service.Features!= null)
             {
@@ -46,9 +53,13 @@ namespace Application.DTO.Response
 
         public bool Reviewed { get; set; }
 
+        public bool Published { get; set; }
+
         public string PicUrl { get; set; }
 
         public string Description { get; set; }
+
+        public CategoryDto Category { get; set; }
 
         public List<string> Positive { get; set; } = new List<string>();
 

@@ -6,6 +6,7 @@ type Service = {
     userScore: number;
     popularity: number;
     reviewed: boolean;
+    published: boolean;
     description: string;
     positive: string[] | null;
     neutral: string[] | null;

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.DTO.Request.Service
 {
@@ -8,7 +9,9 @@ namespace Application.DTO.Request.Service
 
         public string Description { get; set; }
 
-        public string PicUrl { get; set; }
+        public Guid CategoryId { get; set; }
+
+        public IFormFile? PicFile { get; set; }
 
         public string Url { get; set; }
 
@@ -18,7 +21,7 @@ namespace Application.DTO.Request.Service
             {
                 Name = this.Name,
                 Description = this.Description,
-                PicURL = this.PicUrl,
+                CategoryId = this.CategoryId,
                 URL = this.Url,
             };
 

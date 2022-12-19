@@ -27,6 +27,8 @@
 
         public Task<UserInfo> GetCurrentUserInfo(HttpContext httpCont);
 
+        Task<List<UserInfo>> GetClientsAsync();
+
         public Task<MessageResultDto> GoogleAuth(string token);
 
         public int BanUser(Guid id);

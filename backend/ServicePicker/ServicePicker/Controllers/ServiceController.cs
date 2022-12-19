@@ -30,13 +30,21 @@ namespace ServicePicker.Controllers
         }
 
         [HttpGet]
-        public ActionResult<PaginatedData<ServiceDto>> GetPublishedServices(int page, int itemsOnPage, string search)
+        public ActionResult<PaginatedData<ServiceDto>> GetPublishedServices([FromQuery] int page, int itemsOnPage, string? search)
         {
-            var paged = this.serviceService.GetServices(page, itemsOnPage, search);
+            var paged = this.serviceService.GetServices(page, itemsOnPage, search, true);
             return this.Ok(paged);
         }
 
-        [HttpGet("{url}")]
+        [HttpGet("all")]
+        public ActionResult<PaginatedData<ServiceDto>> GetAllServices([FromQuery] int page, int itemsOnPage, string? search)
+        {
+            var paged = this.serviceService.GetServices(page, itemsOnPage, search, false);
+            return this.Ok(paged);
+        }
+
+
+        [HttpGet("url/{url}")]
         public async Task<ActionResult<ServiceDto>> GetPublishedServicesAsync(string url)
         {
             var service = this.serviceService.GetService(url);
@@ -50,35 +58,56 @@ namespace ServicePicker.Controllers
             return this.Ok(service);
         }
 
-        [HttpPost]
-        [Authorize(Roles = Constants.RoleManager.Admin)]
-        public ActionResult<ServiceDto> Create([FromBody] ServiceCreateDto block)
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<ServiceDto>> GetPublishedServicesAsync(Guid id)
         {
-            return this.Ok(this.serviceService.CreateService(block));
+            var service = this.serviceService.GetService(id);
+            var user = await this.accountService.GetCurrentUserAsync(HttpContext);
+
+            if (user != null && service != null)
+            {
+                service.Reviewed = this.reviewService.GetServiceReviews(service.Id).Any(r => r.UserName == user.UserName);
+            }
+
+            return this.Ok(service);
+        }
+
+
+        [HttpPost("createpublish")]
+        [Authorize(Roles = Constants.RoleManager.Admin)]
+        public async Task<ActionResult<ServiceDto>> CreateAndPublishAsync([FromForm] ServiceCreateDto block)
+        {
+            return this.Ok(await this.serviceService.CreateServiceAsync(block, true));
         }
 
         [HttpPost]
-        [Route("Publish")]
         [Authorize(Roles = Constants.RoleManager.Admin)]
-        public ActionResult<ServiceDto> Publish(string url)
+        public async Task<ActionResult<ServiceDto>> CreateAsync([FromForm] ServiceCreateDto block)
         {
-            return this.Ok(this.serviceService.PublishService(url));
+            return this.Ok(await this.serviceService.CreateServiceAsync(block));
         }
 
+        [HttpPost]
+        [Route("publish/{id}")]
+        [Authorize(Roles = Constants.RoleManager.Admin)]
+        public ActionResult<ServiceDto> Publish(Guid id)
+        {
+            return this.Ok(this.serviceService.PublishService(id));
+        }
 
         [HttpPost]
-        [Route("Unpublish")]
+        [Route("unpublish/{id}")]
         [Authorize(Roles = Constants.RoleManager.Admin)]
-        public ActionResult<ServiceDto> Unpublish(string url)
+        public ActionResult<ServiceDto> Unpublish(Guid id)
         {
-            return this.Ok(this.serviceService.UnpublishService(url));
+            return this.Ok(this.serviceService.UnpublishService(id));
         }
 
         [HttpPut]
         [Authorize(Roles = Constants.RoleManager.Admin)]
-        public ActionResult<ServiceDto> Update([FromBody] ServiceUpdateDto block)
+        public async Task<ActionResult<ServiceDto>> UpdateAsync([FromForm] ServiceUpdateDto block)
         {
-            return this.Ok(this.serviceService.UpdateService(block));
+            return this.Ok(await this.serviceService.UpdateServiceAsync(block));
         }
 
         [HttpDelete("{id}")]

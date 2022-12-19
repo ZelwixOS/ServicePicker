@@ -9,6 +9,7 @@ namespace Application.Interfaces
         int DeleteCategory(Guid id);
         List<CategoryDto> GetCategories(string search);
         CategoryServices GetCategory(Guid id, int page, int itemsOnPage);
+        CategoryDto GetCategory(Guid id);
         CategoryDto UpdateCategory(CategoryUpdateRequestDto category);
     }
 }

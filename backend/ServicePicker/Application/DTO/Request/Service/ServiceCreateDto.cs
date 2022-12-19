@@ -1,14 +1,15 @@
 ﻿using Domain.Models;
+using System.Text.Json;
 
 namespace Application.DTO.Request.Service
 {
     public class ServiceCreateDto : ServiceRequestDto
     {
-        public List<string> Positive { get; set; } = new List<string>();
+        public string Positive { get; set; }
 
-        public List<string> Neutral { get; set; } = new List<string>();
+        public string Neutral { get; set; }
 
-        public List<string> Negative { get; set; } = new List<string>();
+        public string Negative { get; set; }
 
         public override Domain.Models.Service ToModel()
         {
@@ -16,24 +17,28 @@ namespace Application.DTO.Request.Service
             {
                 Name = this.Name,
                 Description = this.Description,
-                PicURL = this.PicUrl,
+                CategoryId = this.CategoryId,
                 URL = this.Url,
             };
 
+            var positive = JsonSerializer.Deserialize<string[]>(this.Positive);
+            var neutral = JsonSerializer.Deserialize<string[]>(this.Neutral);
+            var negative = JsonSerializer.Deserialize<string[]>(this.Negative);
+
             service.Features =
-                this.Positive.Select(x =>
+                positive.Select(x =>
                 new Domain.Models.Feature()
                 {
                     FeatureType = FeatureType.Positive,
                     Value = x,
                     Service = service
-                }).Union(this.Negative.Select(x =>
+                }).Union(neutral.Select(x =>
                 new Domain.Models.Feature()
                 {
                     FeatureType = FeatureType.Neutral,
                     Value = x,
                     Service = service
-                })).Union(this.Negative.Select(x =>
+                })).Union(negative.Select(x =>
                 new Domain.Models.Feature()
                 {
                     FeatureType = FeatureType.Negative,

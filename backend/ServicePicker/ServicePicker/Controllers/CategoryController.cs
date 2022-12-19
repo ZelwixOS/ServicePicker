@@ -36,6 +36,12 @@
             return this.Ok(_categoryService.GetCategory(id, page, itemsOnPage));
         }
 
+        [HttpGet("id/{id}")]
+        public ActionResult<CategoryDto> Get(Guid id)
+        {
+            return this.Ok(_categoryService.GetCategory(id));
+        }
+
         [HttpPost]
         [Authorize(Roles = Constants.RoleManager.Admin)]
         public ActionResult<CategoryDto> Create([FromBody] CategoryCreateRequestDto category)

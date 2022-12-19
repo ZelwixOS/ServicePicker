@@ -21,13 +21,15 @@ namespace Infrastructure.Repository
 
         public IQueryable<Service> GetItems()
         {
-            return this.Context.Services.AsQueryable();
+            return this.Context.Services.Include(s => s.Category).AsQueryable();
         }
 
         public Service GetItem(Guid id)
         {
             var service = this.Context.Services
                 .Include(s => s.Features)
+                .Include(s => s.Category)
+                .AsNoTracking()
                 .FirstOrDefault(s => s.Id == id);
 
             return service;

@@ -24,8 +24,12 @@ async function getReviews(serviceId: string) {
   return await getRequest(`/api/Review/${serviceId}`)
 }
 
-async function getService(serviceId: string) {
-  return await getRequest(`/api/Service/${serviceId}`)
+async function getService(url: string) {
+  return await getRequest(`/api/Service/url/${url}`)
+}
+
+async function getServiceById(serviceId: string) {
+  return await getRequest(`/api/Service/id/${serviceId}`)
 }
 
 async function getSearchedServices(
@@ -33,7 +37,8 @@ async function getSearchedServices(
   itemsOnPage: number,
   search: string,
 ) {
-  const url = `/api/Product?PageNumber=${currentPage}&ItemsOnPage=${itemsOnPage}&search=${search}`
+  const url = `/api/Service/all?Page=${currentPage}&ItemsOnPage=${itemsOnPage}&search=${search}`
+
   return await getRequest(url)
 }
 
@@ -60,14 +65,28 @@ async function getCategoryServices(
   return await getRequest(url)
 }
 
+async function getCategory(
+  categoryId: string,
+) {
+  let url = `/api/Category/id/${categoryId}`
+  return await getRequest(url)
+}
+
+async function getClients() {
+  return await getRequest(`/api/Account/GetClients`);
+}
+
 export default getRequest
 
 export {
   getRequest,
   getCategoryServices,
+  getCategory,
+  getServiceById,
   getAllCategories,
   getReviews,
   getServices,
   getService,
   getSearchedServices,
+  getClients,
 }

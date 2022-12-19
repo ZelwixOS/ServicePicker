@@ -31,6 +31,18 @@
             return _categoryRepository.GetItems().Where(c => string.IsNullOrEmpty(search) || c.Name.Contains(search)).Select(x => new CategoryDto(x)).ToList();
         }
 
+        public CategoryDto GetCategory(Guid id)
+        {
+            var category = _categoryRepository.GetItem(id);
+            if (category != null) {
+                category.Services = null;
+                return new CategoryDto(category);
+            }
+
+            return null;
+        }
+
+
         public CategoryServices GetCategory(Guid id, int page, int itemsOnPage)
         {
             var category = _categoryRepository.GetItem(id);

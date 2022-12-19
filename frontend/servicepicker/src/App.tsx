@@ -3,7 +3,6 @@ import './App.css'
 import {
   createTheme,
   ThemeProvider,
-  TypeBackground,
 } from '@mui/material/styles'
 import { Route, Routes } from 'react-router-dom'
 import ServicesPage from './Components/Common/Big/ServicesPage'
@@ -12,6 +11,10 @@ import ServicePage from './Components/Common/Big/ServicePage'
 import CssBaseline from '@mui/material/CssBaseline'
 import CategoriesPage from './Components/Common/Big/CategoriesPage'
 import CategoryPage from './Components/Common/Big/CategoryPage'
+import { AdminPage } from './Components/Administrator/Big/AdminPage'
+import { CategoryList } from './Components/Administrator/Big/CategoryList'
+import { ClientsList } from './Components/Administrator/Big/ClientsList'
+import { ServiceList } from './Components/Administrator/Big/ServiceList'
 
 const innerTheme = createTheme({
   palette: {
@@ -36,6 +39,10 @@ const App: React.FC = () => (
       <Route path="/registration" element={<RegistrationPage />} />
       <Route path="/categories" element={<CategoriesPage />} />
       <Route path="/category/:categoryId" element={<CategoryPage />} />
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/categories" element={<CategoryList />} />
+      <Route path="/admin/clients" element={<ClientsList />} />
+      <Route path="/admin/services" element={<ServiceList />} />
     </Routes>
   </ThemeProvider>
 )

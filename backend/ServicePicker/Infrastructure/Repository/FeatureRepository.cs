@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Domain.RepositoryInterfaces;
 using Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
@@ -23,6 +24,11 @@ namespace Infrastructure.Repository
             return this.Context.Features.AsQueryable();
         }
 
+        public IQueryable<Feature> GetItems(Guid id)
+        {
+            return this.Context.Features.Where(p => p.ServiceId == id).AsNoTracking();
+        }
+
         public Feature GetItem(Guid id)
         {
             var feature = this.Context.Features
@@ -35,6 +41,12 @@ namespace Infrastructure.Repository
         public int DeleteItem(Feature Feature)
         {
             this.Context.Features.Remove(Feature);
+            return this.Context.SaveChanges();
+        }
+
+        public int DeleteItems(IQueryable<Feature> features)
+        {
+            this.Context.Features.RemoveRange(features);
             return this.Context.SaveChanges();
         }
 
