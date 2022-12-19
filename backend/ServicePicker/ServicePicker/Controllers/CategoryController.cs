@@ -25,9 +25,9 @@
         }
 
         [HttpGet]
-        public ActionResult<List<CategoryDto>> Get()
+        public ActionResult<List<CategoryDto>> Get(string search)
         {
-            return this.Ok(_categoryService.GetCategories());
+            return this.Ok(_categoryService.GetCategories(search));
         }
 
         [HttpGet("{id}")]

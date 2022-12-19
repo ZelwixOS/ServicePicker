@@ -37,8 +37,18 @@ async function getSearchedServices(
   return await getRequest(url)
 }
 
-async function getAllCategories() {
-  return (await getRequest(`/api/Category/`)) as Category[]
+async function getAllCategories(useSearch: boolean) {
+
+  const params = new URLSearchParams(window.location.search)
+  const search = params.get('search')
+  let url = '/api/Category?'
+  if (useSearch && search) {
+    url += `search=${search}`
+  } else {
+    url += `search=""`
+  }
+
+  return (await getRequest(url)) as Category[]
 }
 
 async function getCategoryServices(

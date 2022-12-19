@@ -21,9 +21,14 @@
             _serviceRepository = serviceRepository;
         }
 
-        public List<CategoryDto> GetCategories()
+        public List<CategoryDto> GetCategories(string search)
         {
-            return _categoryRepository.GetItems().Select(x => new CategoryDto(x)).ToList();
+            if (search == "\"\"") 
+            {
+                search = null;
+            }
+
+            return _categoryRepository.GetItems().Where(c => string.IsNullOrEmpty(search) || c.Name.Contains(search)).Select(x => new CategoryDto(x)).ToList();
         }
 
         public CategoryServices GetCategory(Guid id, int page, int itemsOnPage)

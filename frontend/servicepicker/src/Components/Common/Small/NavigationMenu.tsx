@@ -50,7 +50,7 @@ const NavigationMenu = () => {
   }, [])
 
   const getCategories = async (isMounted: boolean) => {
-    const res = await getAllCategories()
+    const res = await getAllCategories(false)
     if (isMounted) {
       setCategories(res)
     }
