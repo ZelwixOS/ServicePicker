@@ -61,7 +61,7 @@ async function getCategoryServices(
   currentPage: number,
   itemsOnPage: number,
 ) {
-  let url = `/api/Category/${categoryId}?PageNumber=${currentPage}&ItemsOnPage=${itemsOnPage}`
+  let url = `/api/Category/${categoryId}?Page=${currentPage}&ItemsOnPage=${itemsOnPage}`
   return await getRequest(url)
 }
 
